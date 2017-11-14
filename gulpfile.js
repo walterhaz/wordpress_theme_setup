@@ -1,45 +1,47 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
     browserSync = require('browser-sync').create();
+    sass = require('gulp-sass');
+
 
 var themeName = '_s';
-var themeDir = 'wp-content/themes/_s';
 var wordpressLocation = "localhost/wordpress_theme_setup";
 
+
 // browser-sync watched files
-// automatically reloads the page when files changed
 var browserSyncWatchFiles = [
-    themeDir + './*.css',
-    themeDir + './js/*.js',
-    themeDir + './**/*.php'
+    './wp-content/themes/' + themeName + '/*.css',
+    './wp-content/themes/' + themeName + '/js/*.js',
+    './wp-content/themes/' + themeName + '/**/*.php'
 ];
 
 
-// browser-sync options
-// see: https://www.browsersync.io/docs/options/
-var browserSyncOptions = {
-    proxy: wordpressLocation,
-    notify: false,
-    ui: false,
-};
-
 //compile sass
 gulp.task('styles', function() {
-    gulp.src('sass/**/*.scss')
+    gulp.src('wp-content/themes/' + themeName + '/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('wp-content/themes/' + themeName))
+        .pipe(browserSync.stream())
 });
 
 // watch files gulp
-gulp.task('watch',function() {
+// browser-sync options
+// see: https://www.browsersync.io/docs/options/
+gulp.task('watch', ['styles'],function() {
 
     browserSync.init({
         proxy: wordpressLocation,
-        files: ['./**/*.css', './**/*']
+        files: browserSyncWatchFiles,
+        logLevel: "info",
+        //tunnel: "mysite" //true for random tunnel, string for string.localtunnel.me
+        //open: tunnel
+        notify: false,
+        injectChanges: true
     });
 
-    gulp.watch('sass/**/*.scss',['styles']);
+    gulp.watch("wp-content/themes/_s/sass/*.scss", ['styles']);
+    gulp.watch("./*.php");
 });
 
 
-gulp.task('default', ['styles', 'watch']);
+// default gulp task: compiles sass, browsersyns reloading and watches for file changes
+gulp.task('default', ['watch']);
