@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass').,
+    sass = require('gulp-sass'),
     browserSync = require('browser-sync').create();
 
 var themeName = '_s';
@@ -34,7 +34,7 @@ gulp.task('styles', function() {
 gulp.task('watch',function() {
 
     browserSync.init({
-        proxy: "localhost/hannarutgers",
+        proxy: wordpressLocation,
         files: ['./**/*.css', './**/*']
     });
 
