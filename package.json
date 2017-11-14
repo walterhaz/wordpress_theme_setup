@@ -1,0 +1,20 @@
+{
+  "name": "wordpress_theme_setup",
+  "version": "0.0.1",
+  "description": "Workflow setup for Wordpress themes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/AnnFell/wordpress_theme_setup"
+  },
+  "author": "Annelotte Fellinger",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  }
+}
